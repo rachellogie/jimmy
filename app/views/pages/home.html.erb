@@ -1,0 +1,87 @@
+<%= form_tag search_path, method: :get do %>
+	<div class="row">
+		<div class="col-md-3">
+		      <div class="form-group select-nolabel">
+			<%= country_select :search, params[:search], prompt: "Where do you want to go?", class: "form-control" %>          
+			</div>
+		</div>
+			<div class="col-md-3">
+		    <div class="form-group select-nolabel">
+			<%= country_select :search, params[:search], prompt: "Which city?", class: "form-control" %>          
+			</div>
+		</div>
+		<div class="col-md-2">
+			<%= text_field_tag :start_date, params[:start_date], placeholder: "Start Date", class: "form-control" %>
+		</div>
+		<div class="col-md-2">
+			<%= text_field_tag :end_date, params[:end_date], placeholder: "End Date", class: "form-control" %>
+		</div>
+		<div class="col-md-2">
+			<%= submit_tag "Search", class: "btn btn-primary" %>
+		</div>
+	</div>
+<% end %>
+
+<br>
+
+
+<div class="text-center">
+	<h2>Work your way around the world and get paid</h2>
+</div>
+
+<br>
+
+
+
+<div class="row">
+	<% @rooms.each do |room| %>
+		
+		<div class="col-md-4">
+			<div class="panel panel-default">
+			<div class="panel-heading">
+			<h4><%= room.project_type %> Project</h4>
+			</div>
+				<div class="panel-heading preview">
+					<%= link_to image_tag room.photos[0].image.url(:medium) if room.photos.length > 0 %>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-2">
+							<%= image_tag avatar_url(room.user), class: "img-circle avatar-small" %>&nbsp;
+						</div>
+						<div class="col-xs-10">
+							<%= link_to room.project_name, room %><br />
+							in <%= link_to room.country_name, room %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<% end %>
+</div>
+
+<script>
+	$(function() {
+		$("#start_date").datepicker({
+			dateFormat: 'dd-mm-yy',
+			minDate: 0,
+			maxDate: '1y',
+			onSelect: function(selected) {
+				$('#end_date').datepicker("option", "minDate", selected);
+				$('#end_date').attr('disabled', false);
+			}
+		});
+
+		$("#end_date").datepicker({
+			dateFormat: 'dd-mm-yy',
+			minDate: 0,
+			maxDate: '1y',
+			onSelect: function(selected) {
+				$('#start_date').datepicker("option", "maxDate", selected);
+			}
+		});
+	})
+
+
+</script>

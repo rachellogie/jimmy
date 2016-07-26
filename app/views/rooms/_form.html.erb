@@ -1,0 +1,192 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    About your project
+  </div>
+  <div class="panel-body">
+    <div class="container">
+      <div class="row">
+      <%= form_for @room, :html => { multipart: true } do |f| %>
+
+
+      <div class="col-md-12">
+        <div class="form-group">
+            <label>Project Name</label>
+            <%= f.text_field :project_name, placeholder: "Be clear and descriptive", class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Describe the project</label>
+            <%= f.text_area :summary, rows: 5, placeholder: "Tell about your project", class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Project is on-going</label>
+              <%= f.check_box :project_ongoing, class: "form-control" %>
+            </div>
+          </div>
+
+         <div class="col-md-4">
+          <div class="form-group">
+            <label>When does this project start?</label>
+            <%= f.date_field :project_start, class: "form-control" %>
+            </div>
+          </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>When does it end?</label>
+              <%= f.date_field :project_end, class: "form-control" %>
+            </div>
+          </div>
+
+
+        <div class="col-md-6">
+          <div class="form-group select">
+            <label>What type of work is it?</label>
+              <%= f.select :project_type, [["Creative","Creative"], ["Teaching","Teaching"], ["Physical","Physical"]], prompt: "Select...", class: "form-control" %>
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Volunteer details
+  </div>
+  <div class="panel-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <label>How many volunteers does this project need?</label>
+        </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="numbers">
+                <div class="input-group">
+                   <span class="input-group-btn">
+                      <button id="minus" type="button" class="btn btn-primary btn-number" data-type="minus">
+                        <a  class="glyphicon glyphicon-minus"></a>
+                       </button>
+                    </span>
+                    <div id="value">0</div>
+                    <span class="input-group-btn">
+                       <button id="plus" type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
+                           <a  class="fa fa-plus"></a>
+                        </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Project Address
+  </div>
+  <div class="panel-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group select">
+            <label>Country</label>
+              <%= f.country_select :country, prompt: "Select...", class: "form-control" %>
+          </div>
+
+          <div class="form-group">
+            <label>Street Address</label>
+              <%= f.text_field :street_address, placeholder: "What is your address?", class: "form-control" %>
+          </div>
+
+          <div class="row">
+             <div class="col-md-6">
+              <div class="form-group">
+                <label>City</label>
+                <%= f.text_field :city, placeholder: "City", class: "form-control" %>
+                </div>
+              </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>State</label>
+                  <%= f.text_field :state, placeholder: "State", class: "form-control" %>
+                </div>
+              </div>
+            </div>
+          </div>          
+        </div>
+              </div>
+      </div>
+    </div>            
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Project Photos
+  </div>
+    <div class="panel-body">
+      <div class="container">
+        <div class="row"> 
+          <div class="col-md-12">
+            <div class="form-group">              
+              <span class="btn btn-default btn-file">
+                  <i class="fa fa-cloud-upload fa-lg"></i> Upload Photos 
+                  <%= file_field_tag "images[]", type: :file, multiple: true %>
+              </span>
+            </div>    
+          </div>
+
+        <div id="photos"><%= render 'photos/list' %></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="col-md-6">
+       <div class="form-group">
+       <%= f.submit "Save", class: "btn btn-primary" %>
+      </div> 
+    </div>
+
+    <div class="col-md-6">
+      <div class="actions">
+        <%= f.check_box :active %> Make Project Active
+      </div>
+    </div>
+  </div>
+</div>
+
+<% end %>
+
+<script>
+
+$(function(){
+
+    var valueElement = $('#value');
+    function incrementValue(e){
+        valueElement.text(Math.max(parseInt(valueElement.text()) + e.data.increment, 0));
+        return false;
+    }
+
+    $('#plus').bind('click', {increment: 1}, incrementValue);
+    $('#minus').bind('click', {increment: -1}, incrementValue);
+});
+
+</script>
