@@ -4,8 +4,9 @@ class Room < ActiveRecord::Base
   has_many :reservations
   has_many :reviews
 
-  geocoded_by :country
-  after_validation :geocode, if: :country_changed?
+  geocoded_by :address
+  after_validation :geocode
+  #, if: :country_changed?
 
   validates :project_name, presence: true, length: {maximum: 250}
   validates :summary, presence: true, length: {maximum: 1500}

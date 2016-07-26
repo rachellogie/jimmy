@@ -22,6 +22,10 @@ class PagesController < ApplicationController
 
   	@arrRooms = @rooms.to_a
 
+
+    #this is the only line I added--kind of hacky so take away once you add the city functionality
+    @arrRooms = Room.where(country: params[:search].first)
+
   	if (params[:start_date] && params[:end_date] && !params[:start_date].empty? & !params[:end_date].empty?)
 
   		start_date = Date.parse(params[:start_date])
